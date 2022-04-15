@@ -1,7 +1,9 @@
-import pygame
 import random
-pygame.init()
 
+import pygame
+
+pygame.init()
+BROWN = (139, 69, 19)
 PURPLE = (188, 81, 235)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -92,7 +94,22 @@ class Help_screen:
 
 class Game_screen:
     def __init__(self):
-        self.mountain_x = 700
+        self.ground_pos = 700
+        self.game_start = self.ground_pos - 700
+        self.mountain_height = random.randint(150, 300)
+        self.mountain_width = random.randint(200, 350)
+        self.moving = False
+
+        self.x = 200
+        self.y = 200
+        self.scale = 3
+        self.character = pygame.image.load('character.png')
+        self.character = pygame.transform.scale(self.character, (int(self.character.get_width() * self.scale), int(self.character.get_height() * self.scale)))
+        self.boundary = self.character.get_rect()
+        self.boundary.centre = (self.x, self.y)
+
+
+
 
     def draw(self, screen):
         screen.fill(BLACK)
@@ -100,7 +117,13 @@ class Game_screen:
         pygame.draw.rect(screen, BLUE, [X_pos-250, 2, button_WIDTH - 150, button_height])
         screen.blit(Back_button, [X_pos-250 + 5, 7])
 
-        pygame.draw.rect(screen, PURPLE, [self.mountain_x, random.randint(50, 500), random.randint(180, 400), random.randint(300, 500)])
+        pygame.draw.rect(screen, GREEN, [self.game_start, 530, 550, 70])
+        pygame.draw.rect(screen, BROWN, [self.ground_pos - 150, 350, 350, 250])
+
+        screen.blit(self.character, self.boundary)
+
+
+
 
 
     def screenevent(self, action):
@@ -109,12 +132,23 @@ class Game_screen:
             if X_pos - 250 < x < X_pos - 250 + button_WIDTH - 150:
                 if 2 < y < 47:
                     return "menu"
+        elif action.type == pygame.KEYUP:
+            if action.key == pygame.K_d:
+                self.ground_pos -= 5
+                if self.ground_pos <= 450:
+                    pygame.draw.rect(screen, BROWN, [self.ground_pos, 600 - self.mountain_height, self.mountain_width, self.mountain_height])
+            elif action.key == pygame.K_a:
+                if self.game_start <= 0:
+                    self.ground_pos += 5
+
 
 
 
 
     def update(self):
-        pass
+        pygame.display.update()
+
+
 
 class High_scores:
     def __init__(self):
