@@ -73,7 +73,7 @@ class Help_screen:
         screen.fill(RED)
         Instruction1 = button_font.render('''Move your way around obstacles''', True, BLACK)
         screen.blit(Instruction1, [100, 90])
-        Instruction2 = button_font.render('''make use of the arrow keys''', True, BLACK)
+        Instruction2 = button_font.render('''make use of the 'a', 'd' and 'w' keys''', True, BLACK)
         screen.blit(Instruction2, [100, 130])
         Instruction3 = button_font.render('''try not to die''', True, BLACK)
         screen.blit(Instruction3, [100, 170])
@@ -100,13 +100,9 @@ class Game_screen:
         self.mountain_width = random.randint(200, 350)
         self.moving = False
 
-        self.x = 200
-        self.y = 200
-        self.scale = 3
-        self.character = pygame.image.load('character.png')
-        self.character = pygame.transform.scale(self.character, (int(self.character.get_width() * self.scale), int(self.character.get_height() * self.scale)))
-        self.boundary = self.character.get_rect()
-        self.boundary.centre = (self.x, self.y)
+
+
+
 
 
 
@@ -120,7 +116,7 @@ class Game_screen:
         pygame.draw.rect(screen, GREEN, [self.game_start, 530, 550, 70])
         pygame.draw.rect(screen, BROWN, [self.ground_pos - 150, 350, 350, 250])
 
-        screen.blit(self.character, self.boundary)
+
 
 
 
